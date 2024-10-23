@@ -7,18 +7,18 @@ import java.util.Properties;
 
 public class SendEmail {
     public void sendEmailWithAttachment(String recipientEmail, String pdfFilePath) throws Exception {
-        String from = "your-email@gmail.com";
-        String host = "smtp.gmail.com";
+        String from = "raj.srivastava@drogevate.com";
+        String host = "smtp.office365.com";
 
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.host", host);
-        properties.setProperty("mail.smtp.port", "465");
+        properties.setProperty("mail.smtp.port", "587");
         properties.setProperty("mail.smtp.auth", "true");
         properties.setProperty("mail.smtp.starttls.enable", "true");
 
-        Session session = Session.getDefaultInstance(properties, new Authenticator() {
+        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("your-email@gmail.com", "your-password");
+                return new PasswordAuthentication("raj.srivastava@drogevate.com", "xjtbgjbkwvkjsblh");
             }
         });
 

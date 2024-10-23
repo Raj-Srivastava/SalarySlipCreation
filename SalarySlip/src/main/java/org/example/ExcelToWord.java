@@ -30,6 +30,7 @@ public class ExcelToWord {
                 continue;
             }
 
+            Cell emailCell = row.getCell(row.getLastCellNum()-1);
             // Array to store values dynamically based on the defined mapping
             String[] values = new String[placeholders.length];
 
@@ -103,6 +104,7 @@ public class ExcelToWord {
                     }
                 }
 
+
                 // Save the updated Word document with a unique name for each row
                 String outputFileName = firstName + " " + lastName + " Salary Slip.docx"; // Unique name based on first and last name
                 String fullPath = "src/resources/" + outputFileName; // Ensure this path exists
@@ -110,6 +112,19 @@ public class ExcelToWord {
                     doc.write(out);
                 }
                 System.out.println("Word Created at: " + fullPath);
+
+                // Convert the .docx file to PDF using the WordToPDF class
+                String pdfFilePath = "src/resources/" + firstName + "_" + lastName + "_Salary_Slip.pdf";
+                WordToPDF wordToPDF = new WordToPDF();
+                wordToPDF.convertWordToPDF(fullPath, pdfFilePath);
+
+                // Sending Email Attachment of PDF
+                if(emailCell != null){
+                    String email = emailCell.toString();
+                    SendEmail sendEmail = new SendEmail();
+                    sendEmail.sendEmailWithAttachment("email", "pdfFilePath");
+                    System.out.println("Email with PDF attachment sent successfully.");
+                }
             } catch (Exception e) {
                 e.printStackTrace(); // Handle exceptions for file operations
             }
