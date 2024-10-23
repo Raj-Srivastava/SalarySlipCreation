@@ -110,6 +110,11 @@ public class ExcelToWord {
                     doc.write(out);
                 }
                 System.out.println("Word Created at: " + fullPath);
+
+                // Convert the .docx file to PDF using the WordToPDF class
+                String pdfFilePath = "src/resources/" + firstName + "_" + lastName + "_Salary_Slip.pdf";
+                WordToPDF wordToPDF = new WordToPDF();
+                wordToPDF.convertWordToPDF(wordFilePath, pdfFilePath);
             } catch (Exception e) {
                 e.printStackTrace(); // Handle exceptions for file operations
             }
