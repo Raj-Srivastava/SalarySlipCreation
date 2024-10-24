@@ -6,6 +6,8 @@ import org.apache.poi.xwpf.usermodel.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Iterator;
+import java.util.List;
+
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -30,7 +32,6 @@ public class ExcelToWord {
                 continue;
             }
 
-            Cell emailCell = row.getCell(row.getLastCellNum()-1);
             // Array to store values dynamically based on the defined mapping
             String[] values = new String[placeholders.length];
 
@@ -77,6 +78,7 @@ public class ExcelToWord {
                         if (text != null && !text.isEmpty()) {
                             // Replace each placeholder dynamically based on the values array
                             for (int i = 0; i < placeholders.length; i++) {
+                                System.out.println("Paragraph Text : " + text); // For Debugging
                                 text = text.replace(placeholders[i], values[i]);
                             }
                             run.setText(text, 0); // Update the text in the run
@@ -94,6 +96,7 @@ public class ExcelToWord {
                                     if (text != null && !text.isEmpty()) {
                                         // Replace each placeholder dynamically based on the values array
                                         for (int i = 0; i < placeholders.length; i++) {
+                                            System.out.println("Table Text : " + text); // For Debugging
                                             text = text.replace(placeholders[i], values[i]);
                                         }
                                         run.setText(text, 0); // Update the text in the run
@@ -114,17 +117,18 @@ public class ExcelToWord {
                 System.out.println("Word Created at: " + fullPath);
 
                 // Convert the .docx file to PDF using the WordToPDF class
-                String pdfFilePath = "src/resources/" + firstName + "_" + lastName + "_Salary_Slip.pdf";
-                WordToPDF wordToPDF = new WordToPDF();
-                wordToPDF.convertWordToPDF(fullPath, pdfFilePath);
+//                String pdfFilePath = "src/resources/" + firstName + "_" + lastName + "_Salary_Slip.pdf";
+//                WordToPDF wordToPDF = new WordToPDF();
+//                wordToPDF.convertWordToPDF(fullPath, pdfFilePath);
 
                 // Sending Email Attachment of PDF
-                if(emailCell != null){
-                    String email = emailCell.toString();
-                    SendEmail sendEmail = new SendEmail();
-                    sendEmail.sendEmailWithAttachment("email", "pdfFilePath");
-                    System.out.println("Email with PDF attachment sent successfully.");
-                }
+//                Cell emailCell = row.getCell(row.getLastCellNum()-1);
+//                if(emailCell != null){
+//                    String email = emailCell.toString();
+//                    SendEmail sendEmail = new SendEmail();
+//                    sendEmail.sendEmailWithAttachment("email", "pdfFilePath");
+//                    System.out.println("Email with PDF attachment sent successfully.");
+//                }
             } catch (Exception e) {
                 e.printStackTrace(); // Handle exceptions for file operations
             }
